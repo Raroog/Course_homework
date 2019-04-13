@@ -1,0 +1,17 @@
+select count(movie_title) from movie_metadata where title_year = 2015
+
+select movie_title,  max(duration) as maxdur from movie_metadata where title_year = 2012 group by movie_title order by maxdur desc
+
+select director_name, count(movie_title) as dircount from movie_metadata where director_name is not null group by 1 order by dircount desc
+
+select avg(duration) as avdur from movie_metadata where country = 'Poland'
+
+select movie_title, actor_1_name, actor_2_name, actor_3_name from movie_metadata where actor_1_name similar to '%(th|sh)%' or actor_2_name similar to '%(th|sh)%' or actor_3_name similar to '%(th|sh)%' group by movie_title, actor_1_name, actor_2_name, actor_3_name having actor_1_name similar to '%(th|sh)%' or actor_2_name similar to '%(th|sh)%' or actor_3_name similar to '%(th|sh)%' order by movie_title asc
+
+select movie_title, title_year, budget from movie_metadata where title_year = 2009 and budget is not null order by budget desc limit 10
+
+select movie_title, title_year, actor_1_name, actor_2_name, actor_3_name  from  movie_metadata where title_year between 2005 and 2015 group by movie_title, title_year, actor_1_name, actor_2_name, actor_3_name having actor_1_name = 'Gary Oldman' or actor_2_name = 'Gary Oldman' or actor_3_name = 'Gary Oldman' order by title_year asc
+
+select movie_title, plot_keywords from movie_metadata where plot_keywords in (select plot_keywords from movie_metadata where plot_keywords ilike '%alien%' or plot_keywords ilike '%blood%' or plot_keywords ilike '%horse%') order by movie_title asc
+
+select movie_title, duration, genres from movie_metadata where duration > 100 and genres ilike '%horror%' order by movie_title asc
